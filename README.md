@@ -1,6 +1,6 @@
-# WebService using Spring Boot + JPA/Hibernate + H2 + PostgreSQL + Heroku
+# G2G Lite (API REST JDK 1.8 + JPA/Hibernate + MySQL Spring Security/JWT + Gmail + Amazon S3 + Ionic + Cordova)
 
-Webservice focused on manage shopping where is controlled clients, orders, order items, products, products category and payments.
+App focused on manage all basic features of shopping through a hybrid solution involving both frontend (Ionic + Cordova) and backend (API rest using JDK 1.8).
 
 ## Author
 
@@ -25,8 +25,10 @@ This project was designed to demonstrate:
 * Knowledge of Exceptions hierarchy and inheritance
 * Application of custom exceptions
 * Use of H2 database for supporting develop
-* PostgreSQL database
-* Provisioning with Heroku
+* MySQL database
+* Spring Security / JWT
+* Frontend: Ionic (Angular/TypeScript) + Cordova
+* Provisioning with Heroku and publishing on Play Store
 
 ## Getting Started
 
