@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arosseto.g2glite.entities.Categoria;
+import com.arosseto.g2glite.entities.Category;
 
 @RestController
 @RequestMapping(value="/categorias")
-public class CategoriaResource {
+public class CategoryResource {
 
 	@GetMapping
-	public List<Categoria> listar() {
+	public List<Category> listar() {
 		
-		Categoria cat1 = new Categoria(1, "Informática");
-		Categoria cat2 = new Categoria(2, "Escritório");
+		Category cat1 = new Category(1, "Informática");
+		Category cat2 = new Category(2, "Escritório");
 		
-		List<Categoria> lista = new ArrayList<>(Arrays.asList(cat1, cat2));
+		List<Category> lista = new ArrayList<>(Arrays.asList(cat1, cat2));
 		
 		return lista;
 	}

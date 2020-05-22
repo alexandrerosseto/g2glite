@@ -2,16 +2,26 @@ package com.arosseto.g2glite.entities;
 
 import java.io.Serializable;
 
-public class Categoria implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tb_category")
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	public Categoria() {
+	public Category() {
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Category(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -49,7 +59,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Category other = (Category) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
