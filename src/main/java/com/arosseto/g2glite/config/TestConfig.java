@@ -8,9 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.arosseto.g2glite.entities.Category;
+import com.arosseto.g2glite.entities.City;
 import com.arosseto.g2glite.entities.Product;
+import com.arosseto.g2glite.entities.State;
 import com.arosseto.g2glite.repositories.CategoryRepository;
+import com.arosseto.g2glite.repositories.CityRepository;
 import com.arosseto.g2glite.repositories.ProductRepository;
+import com.arosseto.g2glite.repositories.StateRepository;
 
 @Configuration
 @Profile("test")
@@ -21,6 +25,12 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private StateRepository stateRepository;
+	
+	@Autowired
+	private CityRepository cityRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -42,5 +52,22 @@ public class TestConfig implements CommandLineRunner {
 
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		State st1 = new State(null, "Minas Gerais");
+		State st2 = new State(null, "São Paulo");
+		
+		City c1 = new City(null, "Uberlândia", st1);
+		City c2 = new City(null, "São Paulo", st2);
+		City c3 = new City(null, "Campinas", st2);
+		
+		st1.getCities().addAll(Arrays.asList(c1));
+		st2.getCities().addAll(Arrays.asList(c2, c3));
+		
+		stateRepository.save(st1);
+		stateRepository.save(st2);
+		
+		stateRepository.saveAll(Arrays.asList(st1, st2));
+		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
 	}
 }
