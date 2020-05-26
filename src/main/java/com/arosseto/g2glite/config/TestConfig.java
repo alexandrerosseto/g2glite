@@ -1,5 +1,6 @@
 package com.arosseto.g2glite.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.arosseto.g2glite.entities.Address;
+import com.arosseto.g2glite.entities.CardPayment;
 import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.entities.City;
 import com.arosseto.g2glite.entities.Client;
+import com.arosseto.g2glite.entities.InvoicePayment;
+import com.arosseto.g2glite.entities.Order;
+import com.arosseto.g2glite.entities.Payment;
 import com.arosseto.g2glite.entities.Product;
 import com.arosseto.g2glite.entities.State;
 import com.arosseto.g2glite.entities.enums.ClientType;
+import com.arosseto.g2glite.entities.enums.OrderStatus;
+import com.arosseto.g2glite.entities.enums.PaymentStatus;
 import com.arosseto.g2glite.repositories.AddressRepository;
 import com.arosseto.g2glite.repositories.CategoryRepository;
 import com.arosseto.g2glite.repositories.CityRepository;
 import com.arosseto.g2glite.repositories.ClientRepository;
+import com.arosseto.g2glite.repositories.OrderRepository;
+import com.arosseto.g2glite.repositories.PaymentRepository;
 import com.arosseto.g2glite.repositories.ProductRepository;
 import com.arosseto.g2glite.repositories.StateRepository;
 
@@ -42,6 +51,12 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -87,5 +102,21 @@ public class TestConfig implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(clt1));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Order o1 = new Order(null, sdf.parse("30/09/2019 10:55").toInstant(), OrderStatus.SHIPPED, clt1, ad1);
+		Order o2 = new Order(null, sdf.parse("10/10/2019 13:55").toInstant(), OrderStatus.DELIVERED, clt1, ad2);
+		
+		Payment pay1 = new CardPayment(null, sdf.parse("30/09/2019 10:55").toInstant(), o1, PaymentStatus.SETTLED, 6);
+		o1.setPayment(pay1);
+		
+		Payment pay2 = new InvoicePayment(null, null, o2, PaymentStatus.PENDING, sdf.parse("15/10/2019 00:00"), null);
+		o2.setPayment(pay2);
+		
+		clt1.getOrders().addAll(Arrays.asList(o1, o2));
+		
+		orderRepository.saveAll(Arrays.asList(o1, o2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 }
