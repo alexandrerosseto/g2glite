@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.arosseto.g2glite.entities.Address;
 import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.entities.City;
+import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.entities.Product;
 import com.arosseto.g2glite.entities.State;
+import com.arosseto.g2glite.entities.enums.ClientType;
+import com.arosseto.g2glite.repositories.AddressRepository;
 import com.arosseto.g2glite.repositories.CategoryRepository;
 import com.arosseto.g2glite.repositories.CityRepository;
+import com.arosseto.g2glite.repositories.ClientRepository;
 import com.arosseto.g2glite.repositories.ProductRepository;
 import com.arosseto.g2glite.repositories.StateRepository;
 
@@ -31,6 +36,12 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -63,11 +74,18 @@ public class TestConfig implements CommandLineRunner {
 		st1.getCities().addAll(Arrays.asList(c1));
 		st2.getCities().addAll(Arrays.asList(c2, c3));
 		
-		stateRepository.save(st1);
-		stateRepository.save(st2);
-		
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		Client clt1 = new Client(null, "Mary Gross", "maria@gmail.com", "1111111111111111111", ClientType.Personal);
+		clt1.getPhone().addAll(Arrays.asList("1111111", "2222222"));
+		
+		Address ad1 = new Address(null, "Rua Flores", "300", "Building 303", "Garden", "3829665", clt1, c1);
+		Address ad2 = new Address(null, "Av. Matos", "105", "Building 803", "Center", "552222454", clt1, c2);
+		
+		clt1.getAddresses().addAll(Arrays.asList(ad1, ad2));
+		
+		clientRepository.saveAll(Arrays.asList(clt1));
+		addressRepository.saveAll(Arrays.asList(ad1, ad2));
 	}
 }
