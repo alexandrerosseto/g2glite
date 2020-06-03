@@ -2,7 +2,9 @@ package com.arosseto.g2glite.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tb_product")
@@ -26,21 +29,42 @@ public class Product implements Serializable {
 	private String name;
 	private Double price;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "tb_product_category",
 				joinColumns = @JoinColumn (name = "product_id"), 
 				inverseJoinColumns = @JoinColumn (name = "category_id"))
 	private List<Category> categories = new ArrayList<>();
 	
-	public Product() {
-	}
-
+	@JsonIgnore
+	@OneToMany(mappedBy="id.product")
+	private Set<OrderItem> items = new HashSet<>();
+	
 	public Product(Long id, String name, Double price) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
+	}
+	
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
+	}
+
+	public Product() {
+	}
+	
+	@JsonIgnore
+	public List<Order> getOrders() {
+		List<Order> list = new ArrayList<>();
+		for (OrderItem item : items) {
+			list.add(item.getOrder());
+		}
+		return list;
 	}
 
 	public Long getId() {

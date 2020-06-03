@@ -15,6 +15,7 @@ import com.arosseto.g2glite.entities.City;
 import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.entities.InvoicePayment;
 import com.arosseto.g2glite.entities.Order;
+import com.arosseto.g2glite.entities.OrderItem;
 import com.arosseto.g2glite.entities.Payment;
 import com.arosseto.g2glite.entities.Product;
 import com.arosseto.g2glite.entities.State;
@@ -25,6 +26,7 @@ import com.arosseto.g2glite.repositories.AddressRepository;
 import com.arosseto.g2glite.repositories.CategoryRepository;
 import com.arosseto.g2glite.repositories.CityRepository;
 import com.arosseto.g2glite.repositories.ClientRepository;
+import com.arosseto.g2glite.repositories.OrderItemRepository;
 import com.arosseto.g2glite.repositories.OrderRepository;
 import com.arosseto.g2glite.repositories.PaymentRepository;
 import com.arosseto.g2glite.repositories.ProductRepository;
@@ -57,6 +59,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -118,5 +123,18 @@ public class TestConfig implements CommandLineRunner {
 		
 		orderRepository.saveAll(Arrays.asList(o1, o2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		OrderItem ip1 = new OrderItem(o1, p1, 0.00, 1, 2000.00);
+		OrderItem ip2 = new OrderItem(o1, p3, 0.00, 2, 80.00);
+		OrderItem ip3 = new OrderItem(o2, p2, 100.00, 1, 800.00);
+		
+		o1.getItems().addAll(Arrays.asList(ip1, ip2));
+		o2.getItems().addAll(Arrays.asList(ip3));
+		
+		p1.getItems().addAll(Arrays.asList(ip1));
+		p2.getItems().addAll(Arrays.asList(ip3));
+		p3.getItems().addAll(Arrays.asList(ip2));
+		
+		orderItemRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }

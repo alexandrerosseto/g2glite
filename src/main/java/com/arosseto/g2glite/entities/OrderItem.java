@@ -1,6 +1,8 @@
 package com.arosseto.g2glite.entities;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,19 +16,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@EmbeddedId
 	private OrderItemPk id = new OrderItemPk();
 	
 	private Integer quantity;
 	private Double price;
+	private Double discount;
 	
 	public OrderItem() {
 	}
 
-	public OrderItem(Order order, Product product, Integer quantity, Double price) {
+	public OrderItem(Order order, Product product, Double discount, Integer quantity, Double price) {
 		super();
 		id.setOrder(order);
 		id.setProduct(product);
+		this.discount = discount;
 		this.quantity = quantity;
 		this.price = price;
 	}
@@ -65,9 +70,17 @@ public class OrderItem implements Serializable {
 	}
 	
 	public Double getSubTotal() {
-		return price * quantity;
+		return (price - discount) * quantity;
 	}
 
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,5 +104,20 @@ public class OrderItem implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduct().getName());
+		builder.append(", Qte: ");
+		builder.append(getQuantity());
+		builder.append(", Preço unitário: ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
 	}
 }
