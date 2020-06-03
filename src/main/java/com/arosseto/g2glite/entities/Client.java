@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.ClientType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -39,6 +40,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="tb_contact")
 	private Set<String> phone = new HashSet<>();
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	

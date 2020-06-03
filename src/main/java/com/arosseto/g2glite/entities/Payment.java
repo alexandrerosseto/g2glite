@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.PaymentStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="tb_payment")
@@ -26,7 +26,7 @@ public abstract class Payment implements Serializable {
 	private Instant moment;
 	private Integer paymentStatus;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	@MapsId

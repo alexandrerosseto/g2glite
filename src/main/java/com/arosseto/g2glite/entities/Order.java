@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="tb_order")
@@ -33,6 +34,7 @@ public class Order implements Serializable{
 	
 	private Integer orderStatus;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
@@ -44,6 +46,7 @@ public class Order implements Serializable{
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
+	@JsonManagedReference
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 	

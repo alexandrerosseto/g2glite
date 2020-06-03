@@ -8,13 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_invoicepayment")
 public class InvoicePayment extends Payment  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	private Date paymentDueDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	private Date paymentDate;
 	
 	public InvoicePayment() {
