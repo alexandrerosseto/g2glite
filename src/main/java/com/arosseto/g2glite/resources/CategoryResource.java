@@ -2,6 +2,7 @@ package com.arosseto.g2glite.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.arosseto.g2glite.dto.CategoryDTO;
 import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.services.CategoryService;
 
@@ -26,9 +28,10 @@ public class CategoryResource {
 	private CategoryService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> listObj = service.findAll();
-		return ResponseEntity.ok().body(listObj);
+		List<CategoryDTO> listDto = listObj.stream().map(o -> new CategoryDTO(o)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping(value="/{id}")
