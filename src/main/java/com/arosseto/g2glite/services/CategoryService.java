@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.arosseto.g2glite.dto.CategoryDTO;
 import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.repositories.CategoryRepository;
 import com.arosseto.g2glite.services.exceptions.DatabaseException;
@@ -57,5 +58,9 @@ public class CategoryService {
 	public Page<Category> findPerPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Category fromDTO(CategoryDTO objDTO) {
+		return new Category(objDTO.getId(), objDTO.getName());
 	}
 }
