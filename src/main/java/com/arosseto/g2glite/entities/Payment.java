@@ -40,7 +40,7 @@ public abstract class Payment implements Serializable {
 		this.id = id;
 		this.moment = moment;
 		this.order = order;
-		this.paymentStatus = paymentStatus.getCode();
+		this.paymentStatus = (paymentStatus==null) ? null : paymentStatus.getCode();
 	}
 
 	public Long getId() {

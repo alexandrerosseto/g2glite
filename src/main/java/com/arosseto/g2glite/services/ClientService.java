@@ -66,8 +66,8 @@ public class ClientService {
 	}
 	
 	// This method updates the only two possible fields according to my model and it keeps the other previous data
-	private void updateData(Client newObj, Client Obj) {
-		newObj.setName(Obj.getName());
-		newObj.setEmail(Obj.getEmail());
+	private void updateData(Client newObj, Client obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
 	}
 }
