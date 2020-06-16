@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.arosseto.g2glite.dto.ClientDTO;
+import com.arosseto.g2glite.dto.ClientNewDTO;
 import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.services.ClientService;
 
@@ -56,7 +57,7 @@ public class ClientResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO) {
 		Client obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

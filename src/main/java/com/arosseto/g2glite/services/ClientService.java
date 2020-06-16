@@ -12,7 +12,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.arosseto.g2glite.dto.ClientDTO;
+import com.arosseto.g2glite.dto.ClientNewDTO;
+import com.arosseto.g2glite.entities.Address;
+import com.arosseto.g2glite.entities.City;
 import com.arosseto.g2glite.entities.Client;
+import com.arosseto.g2glite.entities.enums.ClientType;
+import com.arosseto.g2glite.repositories.AddressRepository;
+import com.arosseto.g2glite.repositories.CityRepository;
 import com.arosseto.g2glite.repositories.ClientRepository;
 import com.arosseto.g2glite.services.exceptions.DatabaseException;
 import com.arosseto.g2glite.services.exceptions.ResourceNotFoundException;
@@ -23,13 +29,21 @@ public class ClientService {
 	@Autowired
 	private ClientRepository repo;
 	
+	@Autowired
+	private CityRepository cityRepo;
+	
+	@Autowired
+	private AddressRepository addressRepo;
+	
 	public List<Client> findAll() {
 		return repo.findAll();
 	}
 	
 	public Client insert(Client obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		repo.save(obj);
+		addressRepo.saveAll(obj.getAddresses());
+		return obj;
 	}
 	
 	public Client findById(Long id) {
@@ -63,6 +77,24 @@ public class ClientService {
 	
 	public Client fromDTO(ClientDTO objDTO) {
 		return new Client(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, null);
+	}
+	
+	public Client fromDTO(ClientNewDTO objDTO) {
+		Client clt = new Client(null, objDTO.getName(), objDTO.getEmail(), objDTO.getClientPersonalIdNumber(), ClientType.valueOf(objDTO.getClientType()));
+		
+		City city = cityRepo.findById(objDTO.getCityId()).orElse(new City(objDTO.getCityId(), null, null));
+			
+		Address ad = new Address(null, objDTO.getStreet(), objDTO.getNumber(), objDTO.getObservation(), objDTO.getAddress(), objDTO.getPostal(), clt, city);
+		clt.getAddresses().add(ad);
+		clt.getPhone().add(objDTO.getPhone1());
+		if (objDTO.getPhone2() != null) {
+			clt.getPhone().add(objDTO.getPhone2());
+		}
+		if (objDTO.getPhone3() != null) {
+			clt.getPhone().add(objDTO.getPhone3());
+		}
+		
+		return clt;
 	}
 	
 	// This method updates the only two possible fields according to my model and it keeps the other previous data
