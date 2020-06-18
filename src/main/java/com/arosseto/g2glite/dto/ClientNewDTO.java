@@ -2,20 +2,41 @@ package com.arosseto.g2glite.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.arosseto.g2glite.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="Required field")
+	@Length(min=5, max=150, message="Size must be between 5 and 150 characters")
 	private String name;
+	
+	@NotEmpty(message="Required field")
+	@Email(message="Invalid email")
 	private String email;
+	
+	@NotEmpty(message="Required field")
 	private String clientPersonalIdNumber;
 	private Integer clientType;
 	
+	
+	@NotEmpty(message="Required field")
 	private String street;
+	@NotEmpty(message="Required field")
 	private String number;
 	private String observation;
 	private String address;
+	@NotEmpty(message="Required field")
 	private String postal;
 	
+	
+	@NotEmpty(message="Required field")
 	private String phone1;
 	private String phone2;
 	private String phone3;
