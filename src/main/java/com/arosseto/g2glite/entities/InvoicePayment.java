@@ -9,9 +9,11 @@ import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @Table(name = "tb_invoicepayment")
+@JsonTypeName("InvoicePayment")
 public class InvoicePayment extends Payment  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
