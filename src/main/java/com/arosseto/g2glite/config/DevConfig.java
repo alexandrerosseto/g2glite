@@ -12,14 +12,21 @@ import org.springframework.context.annotation.Profile;
 import com.arosseto.g2glite.services.DBService;
 
 @Configuration
-@Profile("test")
-public class TestConfig implements CommandLineRunner {
+@Profile("dev")
+public class DevConfig implements CommandLineRunner {
 	
 	@Autowired
 	private DBService dbService;
 	
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private String strategy;
+	
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
+		if (!"create".equals(strategy)) {
+			return false;
+		}
+		
 		dbService.instantiateTestDatabase();
 		return true;
 	}
