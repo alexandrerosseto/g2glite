@@ -111,9 +111,9 @@ public class OrderItem implements Serializable {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		StringBuilder builder = new StringBuilder();
 		builder.append(getProduct().getName());
-		builder.append(", Qte: ");
+		builder.append(", Qty: ");
 		builder.append(getQuantity());
-		builder.append(", Preço unitário: ");
+		builder.append(", Unit price: ");
 		builder.append(nf.format(getPrice()));
 		builder.append(", Subtotal: ");
 		builder.append(nf.format(getSubTotal()));

@@ -65,10 +65,12 @@ public class OrderService {
 		paymentRepository.save(obj.getPayment());
 		for (OrderItem oi : obj.getItems()) {
 			oi.setDiscount(0.0);
+			oi.setProduct(productService.findById(oi.getProduct().getId()));
 			oi.setPrice(productService.findById(oi.getProduct().getId()).getPrice());
 			oi.setOrder(obj);
 		}
 		orderItemRepository.saveAll(obj.getItems());
+		System.out.println(obj);
 		return obj;
 	}
 }
