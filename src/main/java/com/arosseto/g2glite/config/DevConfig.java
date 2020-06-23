@@ -4,34 +4,36 @@ import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.arosseto.g2glite.services.DBService;
+import com.arosseto.g2glite.services.EmailService;
+import com.arosseto.g2glite.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
-public class DevConfig implements CommandLineRunner {
+public class DevConfig {
 	
 	@Autowired
 	private DBService dbService;
 	
-	@Value("${spring.jpa.hibernate.ddl-auto}")
-	private String strategy;
+	//@Value("${spring.jpa.hibernate.ddl-auto}")
+	//private String strategy;
 	
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
-		if (!"create".equals(strategy)) {
-			return false;
-		}
+		//if (!"create".equals(strategy)) {
+		//	return false;
+		//}
 		
 		dbService.instantiateTestDatabase();
 		return true;
 	}
 	
-	@Override
-	public void run(String... args) throws Exception {
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 }
