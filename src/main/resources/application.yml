@@ -6,3 +6,6 @@ spring:
     - test
   jpa:
     open-in-view: true
+default:
+ sender: alexandrerosseto@gmail.com
+ recipent: alexandrerosseto@gmail.com
