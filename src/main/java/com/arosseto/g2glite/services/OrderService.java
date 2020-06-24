@@ -73,7 +73,13 @@ public class OrderService {
 			oi.setOrder(obj);
 		}
 		orderItemRepository.saveAll(obj.getItems());
-		emailService.sendOrderConfirmationEmail(obj);
+		
+		// Plan text email
+		//emailService.sendOrderConfirmationEmail(obj);
+		
+		// HTML email
+		emailService.sendOrderConfirmationHtmlEmail(obj);
+		
 		return obj;
 	}
 }
