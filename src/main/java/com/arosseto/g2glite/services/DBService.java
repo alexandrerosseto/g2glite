@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.arosseto.g2glite.entities.Address;
@@ -60,6 +61,9 @@ public class DBService {
 	
 	@Autowired
 	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	public void instantiateTestDatabase() throws ParseException {
 		Category cat1 = new Category(null, "Electronics");
@@ -119,7 +123,7 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Client clt1 = new Client(null, "Mary Gross", "alexandrerosseto@gmail.com", "1111111111111111111", ClientType.Personal);
+		Client clt1 = new Client(null, "Mary Gross", "alexandrerosseto@gmail.com", "1111111111111111111", ClientType.Personal, pe.encode("123"));
 		clt1.getPhone().addAll(Arrays.asList("1111111", "2222222"));
 		
 		Address ad1 = new Address(null, "Rua Flores", "300", "Building 303", "Garden", "3829665", clt1, c1);

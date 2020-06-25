@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.arosseto.g2glite.dto.ClientDTO;
@@ -36,6 +37,9 @@ public class ClientService {
 	
 	@Autowired
 	private AddressRepository addressRepo;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	public List<Client> findAll() {
 		return repo.findAll();
@@ -79,11 +83,11 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO objDTO) {
-		return new Client(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, null);
+		return new Client(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), null, null, null);
 	}
 	
 	public Client fromDTO(ClientNewDTO objDTO) {
-		Client clt = new Client(null, objDTO.getName(), objDTO.getEmail(), objDTO.getClientPersonalIdNumber(), ClientType.valueOf(objDTO.getClientType()));
+		Client clt = new Client(null, objDTO.getName(), objDTO.getEmail(), objDTO.getClientPersonalIdNumber(), ClientType.valueOf(objDTO.getClientType()), pe.encode(objDTO.getPassword()));
 		
 		City city = cityRepo.findById(objDTO.getCityId()).orElse(new City(objDTO.getCityId(), null, null));
 			
