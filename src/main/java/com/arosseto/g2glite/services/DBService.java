@@ -22,6 +22,7 @@ import com.arosseto.g2glite.entities.State;
 import com.arosseto.g2glite.entities.enums.ClientType;
 import com.arosseto.g2glite.entities.enums.OrderStatus;
 import com.arosseto.g2glite.entities.enums.PaymentStatus;
+import com.arosseto.g2glite.entities.enums.Profile;
 import com.arosseto.g2glite.repositories.AddressRepository;
 import com.arosseto.g2glite.repositories.CategoryRepository;
 import com.arosseto.g2glite.repositories.CityRepository;
@@ -126,13 +127,19 @@ public class DBService {
 		Client clt1 = new Client(null, "Mary Gross", "alexandrerosseto@gmail.com", "1111111111111111111", ClientType.Personal, pe.encode("123"));
 		clt1.getPhone().addAll(Arrays.asList("1111111", "2222222"));
 		
+		Client clt2 = new Client(null, "Alexandre Rosseto", "alexandrerosseto@faturasweb.com.br", "2222222222222222", ClientType.Personal, pe.encode("456"));
+		clt2.getPhone().addAll(Arrays.asList("33321312", "423423423"));
+		clt2.addProfile(Profile.ADMIN);
+		
 		Address ad1 = new Address(null, "Rua Flores", "300", "Building 303", "Garden", "3829665", clt1, c1);
 		Address ad2 = new Address(null, "Av. Matos", "105", "Building 803", "Center", "552222454", clt1, c2);
+		Address ad3 = new Address(null, "Av. Somewhere", "1065", "Building 703", "Center", "1231231", clt2, c2);
 		
 		clt1.getAddresses().addAll(Arrays.asList(ad1, ad2));
+		clt1.getAddresses().addAll(Arrays.asList(ad3));
 		
-		clientRepository.saveAll(Arrays.asList(clt1));
-		addressRepository.saveAll(Arrays.asList(ad1, ad2));
+		clientRepository.saveAll(Arrays.asList(clt1, clt2));
+		addressRepository.saveAll(Arrays.asList(ad1, ad2, ad3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		

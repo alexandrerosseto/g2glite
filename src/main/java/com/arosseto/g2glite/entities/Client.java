@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.arosseto.g2glite.entities.enums.ClientType;
+import com.arosseto.g2glite.entities.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,11 +47,17 @@ public class Client implements Serializable {
 	@CollectionTable(name="tb_contact")
 	private Set<String> phone = new HashSet<>();
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="tb_profile")
+	private Set<Integer> profiles = new HashSet<>();
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
 	public Client() {
+		//Every user will be a client necessarily
+		addProfile(Profile.CLIENT);
 	}
 
 	public Client(Long id, String name, String email, String clientPersonalIdNumber, ClientType clientType, String password) {
@@ -59,6 +68,7 @@ public class Client implements Serializable {
 		this.clientPersonalIdNumber = clientPersonalIdNumber;
 		this.clientType = (clientType==null) ? null : clientType.getCode();
 		this.password = password;
+		addProfile(Profile.CLIENT);
 	}
 
 	public Long getId() {
@@ -123,6 +133,14 @@ public class Client implements Serializable {
 
 	public void setPhone(Set<String> phone) {
 		this.phone = phone;
+	}
+	
+	public Set<Profile> getProfile() {
+		return profiles.stream().map(x -> Profile.valueOf(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(Profile profile) {
+		profiles.add(profile.getCode());
 	}
 
 	public List<Order> getOrders() {
