@@ -9,3 +9,6 @@ spring:
 default:
  sender: alexandrerosseto@gmail.com
  recipent: alexandrerosseto@gmail.com
+jwt: 
+  secret: CharactersSequenceToAssignToken
+  expiration: 60000
