@@ -1,5 +1,7 @@
 package com.arosseto.g2glite.services;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,11 +21,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Client clt = repo.findByEmail(email);
-		if (clt == null) {
+		
+		if (Objects.isNull(clt)) {
 			throw new UsernameNotFoundException(email);
 		}
 		
 		return new UserAuth(clt.getId(), clt.getEmail(), clt.getPassword(), clt.getProfile());
 	}
-
 }
