@@ -1,6 +1,7 @@
 package com.arosseto.g2glite.services;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,12 @@ import com.arosseto.g2glite.entities.Address;
 import com.arosseto.g2glite.entities.City;
 import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.entities.enums.ClientType;
+import com.arosseto.g2glite.entities.enums.Profile;
 import com.arosseto.g2glite.repositories.AddressRepository;
 import com.arosseto.g2glite.repositories.CityRepository;
 import com.arosseto.g2glite.repositories.ClientRepository;
+import com.arosseto.g2glite.security.UserAuth;
+import com.arosseto.g2glite.services.exceptions.AuthorizationException;
 import com.arosseto.g2glite.services.exceptions.DatabaseException;
 import com.arosseto.g2glite.services.exceptions.ResourceNotFoundException;
 
@@ -54,6 +58,13 @@ public class ClientService {
 	}
 	
 	public Client findById(Long id) {
+		
+		UserAuth user = UserService.authenticated();
+		
+		if (Objects.isNull(user) || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied");
+		}
+		
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.arosseto.g2glite.services.exceptions.AuthorizationException;
 import com.arosseto.g2glite.services.exceptions.DatabaseException;
 import com.arosseto.g2glite.services.exceptions.ResourceNotFoundException;
 
@@ -44,5 +45,12 @@ public class ResourceExceptionHandler {
 		}
 		
 		return ResponseEntity.status(status).body(stError);
+	}
+	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+		String error = "Authorization error";
+		StandardError stError = new StandardError(Instant.now(), HttpStatus.FORBIDDEN.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(stError);
 	}
 }
