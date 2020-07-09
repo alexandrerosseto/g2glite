@@ -4,6 +4,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.entities.Order;
 
 public interface EmailService {
@@ -15,4 +16,6 @@ public interface EmailService {
 	void sendOrderConfirmationHtmlEmail(Order obj);
 	
 	void sendHtmlEmail(MimeMessage msg);
+	
+	void sendNewPassword(Client client, String email);
 }
