@@ -11,4 +11,12 @@ default:
  recipent: alexandrerosseto@gmail.com
 jwt: 
   secret: CharactersSequenceToAssignToken
-  expiration: 60000
+  expiration: 86400000
+  
+aws:
+  access_key_id: 
+  secret_access_key: 
+s3:
+  bucket: g2glite
+  region: sa-east-1
+  
