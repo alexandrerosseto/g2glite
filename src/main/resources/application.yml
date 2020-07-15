@@ -19,4 +19,8 @@ aws:
 s3:
   bucket: g2glite
   region: sa-east-1
+img:
+  prefix:
+    client:
+      profile: cp
   

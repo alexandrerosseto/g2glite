@@ -1,11 +1,13 @@
 package com.arosseto.g2glite.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -48,6 +50,12 @@ public class ClientService {
 	
 	@Autowired
 	S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
 	
 	public List<Client> findAll() {
 		return repo.findAll();
@@ -130,10 +138,10 @@ public class ClientService {
 		if (Objects.isNull(user)) {
 			throw new AuthorizationException("Access denied");
 		}
-		URI uri = s3Service.uploadFile(file);
-		Client clt = repo.findById(user.getId()).orElse(null);
-		clt.setImageUrl(uri.toString());
-		repo.save(clt);
-		return uri;
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(file);
+		String fileName = prefix + user.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "iamge");
 	}
 }
