@@ -84,6 +84,20 @@ public class ClientService {
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
+	public Client findByEmail(String email) {
+		UserAuth user = UserService.authenticated();
+		if (Objects.isNull(user) || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Access denied");
+		}
+	
+		Client obj = repo.findByEmail(email);
+		if (Objects.isNull(obj)) {
+			throw new ResourceNotFoundException(
+					"Resource not found! Id: " + user.getId() + ", Type: " + Client.class.getName());
+		}
+		return obj;
+	}
+	
 	public Client update(Client obj) {
 		Client newObj = findById(obj.getId());
 		updateData(newObj, obj);
