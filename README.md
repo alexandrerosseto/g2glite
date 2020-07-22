@@ -10,8 +10,8 @@ xyz.
 ## Author
 
 **Alexandre Antonio Lana Rosseto** 
-* *Initial work* - [wbshopping](https://github.com/alexandrerosseto/wbshopping) (GitHub)
-* Released on https://wbshopping.herokuapp.com (Heroku)
+* *Initial work* - [xyz](https://github.com/alexandrerosseto) (GitHub)
+* Released on https (Heroku)
 * My professional profile on [LinkedIn](https://www.linkedin.com/in/alexandrerosseto)
 
 ## License
