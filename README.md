@@ -1,6 +1,11 @@
 # G2G Lite (API REST JDK 1.8 + JPA/Hibernate + MySQL Spring Security/JWT + Gmail + Amazon S3 + Ionic + Cordova)
 
 App focused on manage all basic features of shopping through a hybrid solution involving both frontend (Ionic + Cordova) and backend (API rest using JDK 1.8).
+=======
+# xyz
+
+xyz.
+>>>>>>> d1f7e2c... Update README.md
 
 ## Author
 
