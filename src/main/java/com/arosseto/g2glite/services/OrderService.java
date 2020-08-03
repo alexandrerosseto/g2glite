@@ -18,7 +18,6 @@ import com.arosseto.g2glite.entities.Order;
 import com.arosseto.g2glite.entities.OrderItem;
 import com.arosseto.g2glite.entities.enums.OrderStatus;
 import com.arosseto.g2glite.entities.enums.PaymentStatus;
-import com.arosseto.g2glite.repositories.ClientRepository;
 import com.arosseto.g2glite.repositories.OrderItemRepository;
 import com.arosseto.g2glite.repositories.OrderRepository;
 import com.arosseto.g2glite.repositories.PaymentRepository;
