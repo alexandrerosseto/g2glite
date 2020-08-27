@@ -25,13 +25,21 @@ import com.arosseto.g2glite.dto.CategoryDTO;
 import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.services.CategoryService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value="/categories")
+@Api(value="/categories",  tags="categories")
 public class CategoryResource {
 
 	@Autowired
 	private CategoryService service;
 	
+	@ApiOperation(value = "Retrieve all categories", response = Category.class, responseContainer = "List")
 	@GetMapping
 	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> listObj = service.findAll();
@@ -39,6 +47,7 @@ public class CategoryResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@ApiOperation(value = "Retrieve all categories per page", response = Category.class, responseContainer = "List")
 	@GetMapping(value="/page")
 	public ResponseEntity<Page<CategoryDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
@@ -50,12 +59,15 @@ public class CategoryResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@ApiOperation(value = "Find by ID", response = Category.class)
 	@GetMapping(value="/{id}")
-	public ResponseEntity<Category> findById(@PathVariable Long id) {
+	public ResponseEntity<Category> findById(
+			@ApiParam(value = "Category ID", required = true, example = "1") @PathVariable Long id) {
 		Category obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Insert a new category", response = Category.class)
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDTO) {
@@ -65,6 +77,7 @@ public class CategoryResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value = "Update a category", response = Category.class)
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDTO, @PathVariable Long id) {
@@ -74,6 +87,10 @@ public class CategoryResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Remove a category", response = Category.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Impossible to delete a category that has associated products"),
+			@ApiResponse(code = 404, message = "ID not found") })
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {

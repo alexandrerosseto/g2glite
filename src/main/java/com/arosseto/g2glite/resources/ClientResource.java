@@ -27,25 +27,32 @@ import com.arosseto.g2glite.dto.ClientNewDTO;
 import com.arosseto.g2glite.entities.Client;
 import com.arosseto.g2glite.services.ClientService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/clients")
+@Api(value="/clients",  tags="clients")
 public class ClientResource {
 
 	@Autowired
 	private ClientService service;
 	
+	@ApiOperation(value = "Find client by ID")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
 		Client obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Find client by email")
 	@GetMapping(value="/email")
 	public ResponseEntity<Client> find(@RequestParam(value="value") String email) {
 		Client obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Retrieve all clients")
 	@GetMapping
 	public ResponseEntity<List<ClientDTO>> findAll() {
 		List<Client> listObj = service.findAll();
@@ -53,6 +60,7 @@ public class ClientResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@ApiOperation(value = "Retrieve all clients per page")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping(value="/page")
 	public ResponseEntity<Page<ClientDTO>> findPage(
@@ -65,6 +73,7 @@ public class ClientResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
+	@ApiOperation(value = "Insert a new client")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO) {
 		Client obj = service.fromDTO(objDTO);
@@ -73,6 +82,7 @@ public class ClientResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value = "Update a client")
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO objDTO, @PathVariable Long id) {
 		Client obj = service.fromDTO(objDTO);
@@ -81,6 +91,7 @@ public class ClientResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Delete a client")
 	@PreAuthorize("hasAnyRole('ADMIN')")	
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -88,6 +99,7 @@ public class ClientResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Update the authenticated client's picture")
 	@PostMapping(value="/picture")
 	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
 		URI uri = service.uploadProfilePicture(file);

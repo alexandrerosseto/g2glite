@@ -60,7 +60,7 @@ public class Client implements Serializable {
 		addProfile(Profile.CLIENT);
 	}
 
-	public Client(Long id, String name, String email, String clientPersonalIdNumber, ClientType clientType, String password) {
+	public Client(Long id, String name, String email, ClientType clientType, String clientPersonalIdNumber, String password) {
 		super();
 		this.id = id;
 		this.name = name;

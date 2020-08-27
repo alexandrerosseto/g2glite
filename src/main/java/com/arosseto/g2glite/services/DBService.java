@@ -108,7 +108,7 @@ public class DBService {
 		p10.getCategories().addAll(Arrays.asList(cat6));
 		p11.getCategories().addAll(Arrays.asList(cat7));
 
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		
 		State st1 = new State(null, "MG");
@@ -124,11 +124,11 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Client clt1 = new Client(null, "Mary Gross", "alexandrerosseto@gmail.com", "1111111111111111111", ClientType.Personal, pe.encode("123"));
+		Client clt1 = new Client(null, "Mary Gross", "alexandrerosseto@gmail.com", ClientType.Personal, "1111111111111111111", pe.encode("123"));
 		clt1.getPhone().addAll(Arrays.asList("1111111", "2222222"));
 		//clt1.addProfile(Profile.ADMIN);
 		
-		Client clt2 = new Client(null, "Alexandre Rosseto", "alexandrerosseto@faturasweb.com.br", "2222222222222222", ClientType.Personal, pe.encode("456"));
+		Client clt2 = new Client(null, "Alexandre Rosseto", "alexandrerosseto@faturasweb.com.br", ClientType.Personal, "2222222222222222", pe.encode("456"));
 		clt2.getPhone().addAll(Arrays.asList("33321312", "423423423"));
 		clt2.addProfile(Profile.ADMIN);
 		

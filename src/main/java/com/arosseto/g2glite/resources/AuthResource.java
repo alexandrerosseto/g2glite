@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arosseto.g2glite.dto.EmailDTO;
+import com.arosseto.g2glite.entities.Category;
 import com.arosseto.g2glite.security.JWTUtil;
 import com.arosseto.g2glite.security.UserAuth;
 import com.arosseto.g2glite.services.AuthService;
 import com.arosseto.g2glite.services.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/auth")
+@Api(value="/auth",  tags="auth")
 public class AuthResource {
 	
 	@Autowired
@@ -27,6 +32,7 @@ public class AuthResource {
 	@Autowired
 	private AuthService authService;
 
+	@ApiOperation(value = "Generate a new token for the current user", response = UserAuth.class)
 	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
 		UserAuth user = UserService.authenticated();
@@ -36,6 +42,7 @@ public class AuthResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@ApiOperation(value = "Password Reset", response = Category.class)
 	@PostMapping(value = "/forgot")
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDTO) {
 		authService.sendNewPassword(objDTO.getEmail());

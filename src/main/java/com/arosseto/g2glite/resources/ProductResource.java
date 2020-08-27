@@ -16,19 +16,25 @@ import com.arosseto.g2glite.entities.Product;
 import com.arosseto.g2glite.resources.utils.URL;
 import com.arosseto.g2glite.services.ProductService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/products")
+@Api(value="/products",  tags="products")
 public class ProductResource {
 
 	@Autowired
 	private ProductService service;
-
+	
+	@ApiOperation(value = "Find product by ID")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Product> findById(@PathVariable Long id) {
 		Product obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Retrieve all products per page")
 	@GetMapping
 	public ResponseEntity<Page<ProductDTO>> findPage(
 			@RequestParam(value="name", defaultValue="") String name,

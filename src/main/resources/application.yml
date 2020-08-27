@@ -11,10 +11,10 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 default:
- sender: alexandrerosseto@gmail.com
- recipent: alexandrerosseto@gmail.com
+ sender: g2glite.naoresponda@gmail.com
+ recipent: g2glite.naoresponda@gmail.com
 jwt: 
-  secret: CharactersSequenceToAssignToken
+  secret: SecureSequenceforYourVersionofThisAPPg2glite20
   expiration: 86400000
   
 aws:

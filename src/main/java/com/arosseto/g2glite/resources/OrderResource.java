@@ -19,19 +19,25 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.arosseto.g2glite.entities.Order;
 import com.arosseto.g2glite.services.OrderService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value="/orders")
+@Api(value="/orders",  tags="orders")
 public class OrderResource {
 
 	@Autowired
 	private OrderService service;
 	
+	@ApiOperation(value = "Find order by ID")
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Order> findById(@PathVariable Long id) {
 		Order obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@ApiOperation(value = "Insert a new order")
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody Order obj) {
 		obj = service.insert(obj);
@@ -39,6 +45,7 @@ public class OrderResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@ApiOperation(value = "Retrieve all orders per page")
 	@GetMapping
 	public ResponseEntity<Page<Order>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active:
+    - test
+  jpa:
+    open-in-view: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+default:
+ sender: alexandrerosseto@gmail.com
+ recipent: alexandrerosseto@gmail.com
+jwt: 
+  secret: CharactersSequenceToAssignToken
+  expiration: 86400000
+  
+aws:
+  access_key_id: 
+  secret_access_key: 
+s3:
+  bucket: g2glite
+  region: sa-east-1
+img:
+  prefix:
+    client:
+      profile: cp
+  profile:
+    size: 200
+  

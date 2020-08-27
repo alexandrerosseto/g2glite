@@ -1,94 +1,122 @@
-# G2G Lite (API REST JDK 1.8 + JPA/Hibernate + MySQL Spring Security/JWT + Gmail + Amazon S3 + Ionic + Cordova)
+[![header][header-url]][header-link]
 
-App focused on manage all basic features of shopping through a hybrid solution involving both frontend (Ionic + Cordova) and backend (API rest using JDK 1.8).
-=======
-# xyz
+# G2GLITE
+[![Project Version][version-image]][version-url]
+[![Backend][Backend-image]][Backend-url]
 
-xyz.
->>>>>>> d1f7e2c... Update README.md
+> An open source e-commerce platform for studies purposes.
 
+This is a project designed to be the backend side which was developed in Java using RESTful principles.
+
+---
 ## Author
 
 **Alexandre Antonio Lana Rosseto** 
-* *Initial work* - [xyz](https://github.com/alexandrerosseto) (GitHub)
-* Released on https (Heroku)
-* My professional profile on [LinkedIn](https://www.linkedin.com/in/alexandrerosseto)
+* *Backend work* : [g2glite-backend][repository-url] (Repository space)
+* *Frontend work* : [g2glite-frontend][repository-frontend-url] (Repository space)
+* *Released on* [cloud-provider][cloud-provider-url] (Cloud provider)
+* *My professional profile on* [LinkedIn][linkedin-url]
+* *See my articles on* [Medium][medium-url]
 
-## License
+## Showcase
 
-This project is free to use and it was designed for demonstration purposes.
+This project was designed to demonstrate knowledge in:
 
-## Expectations
-
-<<<<<<< HEAD
-This project was designed to demonstrate:
-
-* Java EE
-* Object-relational mapping with JPA/Hibernate
-* Use of Spring Boot libraries
-* Swagger
-* Lambda applications
-* Knowledge of Exceptions hierarchy and inheritance
-* Application of custom exceptions
-* Use of H2 database for supporting develop
-* MySQL database
+* REST API
+* JDK 1.8
+* Spring Boot 2.2.6
+* Maven
+* JPA / Hibernate
+* MySQL
 * Spring Security / JWT
-* Frontend: Ionic (Angular/TypeScript) + Cordova
-* Provisioning with Heroku and publishing on Play Store
-=======
->>>>>>> 0ce6905... Update README.md
+* Swagger
+* Gmail
+* Amazon S3
+* Thymeleaf
+* bCrypt
+* Heroku
 
-## Getting Started
+## Complementary Reading
+
+* [GUIA DE BOLSO: GIT / GITHUB](https://medium.com/@alexandrerosseto/guia-de-bolso-git-github-b1b8c4492897)
+* [HEROKU — CONFIGURAR E PROVISIONAR JAVA + MYSQL](https://medium.com/@alexandrerosseto/heroku-configurar-e-provisionar-java-mysql-976b73d22ac0)
+
+---
+
+## Usage example
+
+Please check the swagger documentation.
 
 
-### Prerequisites
+---
 
+## Installation
 
-Recomended complementary tools.
+There is no special configuration or steps to make the project running. However, it is necessary to let application.yml file set to test profile. By default, this profile is defined already.
 
+Please, pay attention on the other parameters that you must set in order to make it run smoothly.
 
-### Installing
+Amazon S3:
 
-A step by step series of examples that tell you how to get a development environment running.
+* Update the tag 'aws' with your access key id and your secret access key. You can have this by creating your account on Amazon S3.
 
+Default E-Mail
+* Update the tag 'sender' with sender's email.
+* Update the tag 'recipent' with recipent's email.
 
-**Installing and Configuring H2 Database**
+Check if your local port 8080 is available otherwise change the tag 'port' accordingly.
 
-```
+---
 
-```
+## Development setup
 
-**Dependencies**
-
-```
-
-```
-
-**Provisioning Production Environment On Heroku**
- 
-```
-
-```
-
-**Installing PostgreSQL**
-
-```
-
-```
-
-**Load Data Into PostgreSQL Provisioned**
-
-```
-
-```
+Soon...
 
 ## Running the tests
 
-This project is been released without JUnit tests because it was designed intended to show knowlegde related to the items described on the section Expectations.
+Soon...
 
-Please see [Spring-boot-mongodb](https://github.com/alexandrerosseto/spring-boot-mongodb) to have a demonstration on how to use JUnit for integration tests.
+---
 
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) - To deploy on Heroku
+
+## Release History
+
+* 1.0.0
+    * Initial work
+
+---
+
+## Contributing
+
+1. Fork it (<https://github.com/alexandrerosseto/g2glite/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
+
+<!-- Markdown link & img dfn's -->
+
+[header-url]: g2glite-intro.png
+[header-link]: https://github.com/alexandrerosseto
+
+[repository-url]: https://github.com/alexandrerosseto/g2glite
+[repository-frontend-url]: https://github.com/alexandrerosseto/g2glite-frontend
+
+[cloud-provider-url]: https://g2glite.herokuapp.com
+
+[linkedin-url]: https://www.linkedin.com/in/alexandrerosseto
+
+[medium-url]: https://medium.com/@alexandrerosseto
+
+[wiki]: https://github.com/yourname/yourproject/wiki
+
+[version-image]: https://img.shields.io/badge/Version-1.0.0-brightgreen?style=for-the-badge&logo=appveyor
+[version-url]: https://img.shields.io/badge/version-1.0.0-green
+[Frontend-image]: https://img.shields.io/badge/Frontend-Ionic-blue?style=for-the-badge
+[Frontend-url]: https://img.shields.io/badge/Frontend-Ionic-blue?style=for-the-badge
+[Backend-image]: https://img.shields.io/badge/Backend-Java%208-important?style=for-the-badge
+[Backend-url]: https://img.shields.io/badge/Backend-Java%208-important?style=for-the-badge
